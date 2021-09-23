@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+option go_package="./pb";
+
+package pb;
+
+import "google/api/annotations.proto";
+
+message LoginRequest{
+  string Email =1;
+  string Password =2;
+
+}
+
+message LoginResponse{
+  int64 UserId =1;
+  string UserName=2;
+  string Email=3;
+  string Err=4;
+}
+
+message RegisterRequest{
+  string UserName =1;
+  string Email =2;
+  string Password=3;
+}
+
+message RegisterResponse{
+  int64 UserId =1;
+  string UserName=2;
+  string Email=3;
+  string Err=4;
+}
+
+service UserService{
+  rpc Login(LoginRequest)returns(LoginResponse){
+    option (google.api.http)={
+      post: "/v1/user/userlogin"
+      body: "*"
+
+    };
+  }
+
+  rpc Register(RegisterRequest)returns(RegisterResponse){
+    option (google.api.http)={
+      post: "/v1/user/userregister"
+      body: "*"
+
+    };
+  }
+}
+
